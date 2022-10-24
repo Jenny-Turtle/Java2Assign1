@@ -22,18 +22,19 @@ public class MovieAnalyzer {
       Matcher matcher = pattern.matcher(line);
       int j = 0;
       while (matcher.find()) {
-          String cell = matcher.group(2);
-          Pattern pattern2 = Pattern.compile("\"((.)*)\"");
-          Matcher matcher2 = pattern2.matcher(cell);
-             if(matcher2.find()) {
-                    cell = matcher2.group(1);
-                }
-                if(j < 16)  realArray[j++] = cell;
-            }
-            movies.add(new movie(realArray[1],realArray[2],realArray[3],realArray[4]
-                    ,realArray[5],realArray[6],realArray[7],realArray[8],realArray[9],
-                    realArray[10],realArray[11],realArray[12],realArray[13],realArray[14],
-                    realArray[15]));
+        String cell = matcher.group(2);
+        Pattern pattern2 = Pattern.compile("\"((.)*)\"");
+        Matcher matcher2 = pattern2.matcher(cell);
+        if (matcher2.find()) {
+          cell = matcher2.group(1);
+        }
+        if (j < 16)  {
+            realArray[j++] = cell;
+        }
+      }
+      movies.add(new movie(realArray[1], realArray[2], realArray[3], realArray[4], realArray[5], realArray[6], realArray[7], realArray[8], realArray[9],
+                  realArray[10], realArray[11], realArray[12], realArray[13], realArray[14],
+                  realArray[15]));
         }
         createStars();
     }
