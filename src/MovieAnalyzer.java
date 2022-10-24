@@ -3,27 +3,29 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
 public class MovieAnalyzer {
-    List<movie> movies ;
-    List<Star> Stars;
-    public MovieAnalyzer(String dataset_path) throws IOException {
-        movies = new ArrayList<>();
-        Stars = new ArrayList<>();
-        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(dataset_path),"UTF-8"));
-        Pattern pattern = Pattern.compile("(,)?((\"[^\"]*(\"{2})*[^\"]*\")*[^,]*)");
+  List<movie> movies;
+  List<Star> Stars;
 
-        String line;
-        line = br.readLine();
-        String[] realArray = new String[16];
+  public MovieAnalyzer(String dataset_path) throws IOException {
+    movies = new ArrayList<>();
+    Stars = new ArrayList<>();
+    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(dataset_path), "UTF-8"));
+    Pattern pattern = Pattern.compile("(,)?((\"[^\"]*(\"{2})*[^\"]*\")*[^,]*)");
 
-        while ((line = br.readLine()) != null ){
-            Matcher matcher = pattern.matcher(line);
-            int j = 0;
-            while(matcher.find()) {
-                String cell = matcher.group(2);
-                Pattern pattern2 = Pattern.compile("\"((.)*)\"");
-                Matcher matcher2 = pattern2.matcher(cell);
-                if(matcher2.find()) {
+    String line;
+    line = br.readLine();
+    String[] realArray = new String[16];
+
+    while ((line = br.readLine()) != null){
+      Matcher matcher = pattern.matcher(line);
+      int j = 0;
+      while (matcher.find()) {
+          String cell = matcher.group(2);
+          Pattern pattern2 = Pattern.compile("\"((.)*)\"");
+          Matcher matcher2 = pattern2.matcher(cell);
+             if(matcher2.find()) {
                     cell = matcher2.group(1);
                 }
                 if(j < 16)  realArray[j++] = cell;
@@ -41,11 +43,11 @@ public class MovieAnalyzer {
                 .flatMap(movie -> Arrays.stream(movie.Stars))
                 .distinct()
                 .sorted()
-                .toList();
+                .collect(Collectors.toList());
 
         List<movie> goodMovies = movies.stream()
                 .distinct()
-                .toList();
+                .collect(Collectors.toList());
 
         for (int i = 0; i < allStars.size(); i++) {
             String name = allStars.get(i);
@@ -112,7 +114,7 @@ public class MovieAnalyzer {
     public Map<List<String>, Integer> getCoStarCount(){
         List<movie> moviesDistinct = movies.stream()
                 .distinct()
-                .toList();
+                .collect(Collectors.toList());
         List<List<String>> total = new ArrayList<>();
         List<String> temp = new ArrayList<>();
         Map<List<String>, Integer> coStar = new HashMap<>();
@@ -134,7 +136,7 @@ public class MovieAnalyzer {
 
         List<List<String>> tureTotal = total.stream()
                 .distinct()
-                .toList();
+                .collect(Collectors.toList());
 
         for (int i = 0; i < tureTotal.size(); i++) {
             List<String> cur = tureTotal.get(i);
